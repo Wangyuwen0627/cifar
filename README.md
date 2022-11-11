@@ -1,3 +1,5 @@
+<link rel="stylesheet" type="text/css" href="my_css.css">
+
 # CIFAR10分类
 ## 1. 模型结构介绍
 ### 1.1 ResNet-18
@@ -33,13 +35,117 @@ Transition Layer将不同DenseBlock之间进行连接的模块，主要功能是
 该种方法下，模型测试准确率可以达到：
 ## 3. 模型超参数对模型性能的影响
 ### 3.1 学习率
-学习率过大导致无法收敛，原因是因为学习率大会导致模型学习数据时间加快，提前到达拟合点，
-但是epoch没结束，继续学习训练数据，容易导致过拟合于原始数据。过小则导致收敛慢。
+我在学习率0.001，0.01，0.1的情况下分别进行了实验，得到如下表与下图所示的实验结果： 
+
+|学习率| 0.001  | 0.01  | 0.1 |
+| :----: | :----: | :----: | :----: |
+| 准确率 | 91.45% | 92.120% | 88.35% |
+
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="pics/acc1.png" width = "65%" alt=""/>
+    <br>
+    <div style="color:orange; border-bottom: 1px solid #d9d9d9;
+    display: inline-block;
+    color: #999;
+    padding: 2px;">
+      学习率0.001时，训练集与测试集上的准确率
+  	</div>
+</center>
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="pics/acc2.png" width = "65%" alt=""/>
+    <br>
+    <div style="color:orange; border-bottom: 1px solid #d9d9d9;
+    display: inline-block;
+    color: #999;
+    padding: 2px;">
+      学习率0.01时，训练集与测试集上的准确率
+  	</div>
+</center>
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="pics/acc3.png" width = "65%" alt=""/>
+    <br>
+    <div style="color:orange; border-bottom: 1px solid #d9d9d9;
+    display: inline-block;
+    color: #999;
+    padding: 2px;">
+      学习率0.1时，训练集与测试集上的准确率
+  	</div>
+</center>
+我们可以发现学习率过大导致无法收敛，猜测可能是由于学习率大会导致模型学习数据时间加快，提前到达拟合点，
+但是epoch没结束，继续学习训练数据，容易导致过拟合于原始数据。而过小则会导致收敛慢。可以看到当lr为0.1时，模型经过40个epoch就能收敛
+，但是lr为0.001时，模型则需要80个epoch才能收敛，而且出现过拟合情况。
+
 ### 3.2 batch_size
-模型对batchsize虽然没有学习率那么敏感, 但是进一步提高模型性能上, batchsize会变成一个非常关键的参数。
+我在batch-size分别为64，128，256的情况下分别进行了实验，得到如下表与下图所示的实验结果：  
+可以发现模型对batchsize虽然没有学习率那么敏感, 但是进一步提高模型性能上, batchsize会变成一个非常关键的参数。  
 大的batchsize减少训练时间, 提高稳定性，但是泛化能力下降，小的batchsize则会使训练时间变长。
+
+| batch_size |   64   |   128   |  256   |
+|:----------:|:------:|:-------:|:------:|
+|    准确率     | 91.09% | 92.12%  | 91.51% |
+
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="pics/acc4.png" width = "65%" alt=""/>
+    <br>
+    <div style="color:orange; border-bottom: 1px solid #d9d9d9;
+    display: inline-block;
+    color: #999;
+    padding: 2px;">
+      batch-size为64时，训练集与测试集上的准确率
+  	</div>
+</center>
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="pics/acc5.png" width = "65%" alt=""/>
+    <br>
+    <div style="color:orange; border-bottom: 1px solid #d9d9d9;
+    display: inline-block;
+    color: #999;
+    padding: 2px;">
+      batch-size为256，训练集与测试集上的准确率
+  	</div>
+</center>
+
 ### 3.3 优化器
 选择优化器的问题在于，由于no-free-lunch定理，没有一个单一的优化器可以在所有场景中超越其他的。
 因此没有一劳永逸的解决方案，必须根据手头的特定问题仔细选择优化器。
-根据目前观察目前SOTA所采用的一些优化器，发现广泛使用的是SGD优化器，因此比较了一下使用SGD优化器和Adam、Adagrad几种优化器时模型的性能。
+根据目前观察目前SOTA所采用的一些优化器，发现广泛使用的是SGD优化器，因此比较了一下使用SGD优化器和Adam、Adagrad几种优化器时模型的性能。  
+得到了如下所示的结果，可以看到对于CIFAR10的分类问题，SGD优化器的确比其它的优化器更有效。
 
+| 优化器  |  SGD   |  Adam   | Adagrad |
+|:----:|:------:|:-------:|:-------:|
+| 准确率  | 92.12% | 69.45%  | 92.09%  |
+
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="pics/img.png" width = "65%" alt=""/>
+    <br>
+    <div style="color:orange; border-bottom: 1px solid #d9d9d9;
+    display: inline-block;
+    color: #999;
+    padding: 2px;">
+      优化器为Adam时，训练集与测试集上的准确率
+  	</div>
+</center>
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="pics/img_1.png" width = "65%" alt=""/>
+    <br>
+    <div style="color:orange; border-bottom: 1px solid #d9d9d9;
+    display: inline-block;
+    color: #999;
+    padding: 2px;">
+      优化器为Adagrad，训练集与测试集上的准确率
+  	</div>
+</center>

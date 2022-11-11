@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="wyw@10.82.68.204:18022 (6)" remoteFilesAllowedToDisappearOnAutoupload="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="wyf@10.214.211.135:22" remoteFilesAllowedToDisappearOnAutoupload="false">
     <serverData>
       <paths name="root@43.138.26.153:22">
         <serverdata>
@@ -79,10 +79,24 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="root@region-3.seetacloud.com:23145">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="root@region-41.autodl.com:42821">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="wyf@10.214.211.135:22">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/wyf/cifar" local="$PROJECT_DIR$" />
           </mappings>
         </serverdata>
       </paths>
@@ -125,6 +139,13 @@
         <serverdata>
           <mappings>
             <mapping deploy="/home/wyw/cifar" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="wyw@10.82.68.204:18022 (7)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

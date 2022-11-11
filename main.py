@@ -12,6 +12,13 @@ import matplotlib.ticker as ticker
 import matplotlib.gridspec as gridspec
 from ResNet18.net import ResNet18
 from DenseNet.net import DenseNet
+import time
+import datetime
+
+def format_time(time):
+    elapsed_rounded = int(round((time)))
+    # 格式化为 hh:mm:ss
+    return str(datetime.timedelta(seconds=elapsed_rounded))
 
 def drawAcc(train_acc_list, test_acc_list):
     fig, ax = plt.subplots(figsize=(9, 3), dpi=200, facecolor = "#EFE9E6")
@@ -24,23 +31,12 @@ def drawAcc(train_acc_list, test_acc_list):
     print(X)
     print(train_acc_list)
     print(test_acc_list)
-    ax.plot(X, train_acc_list, marker="o", mfc = "white", ms = 2)
-    ax.plot(X, test_acc_list, marker="o", mfc = "white", ms = 2)
-    # xmajor = ticker.MultipleLocator(10)  # 主 10 的倍数
-    # xminor = ticker.MultipleLocator(5)  # 次 2的倍数
-    # xticks_ = ax.xaxis.set_ticklabels([x for x in range(0, len(X) + 3, 4)])
-    # This last line outputs
-    # [-1, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35]
-    # and we mark the tickers every two positions.
-    # ax.xaxis.set_tick_params(length=5, color="#4E616C", labelcolor="#4E616C", labelsize=6)
-    # ax.yaxis.set_tick_params(length=5, color="#4E616C", labelcolor="#4E616C", labelsize=6)
-    # ax.xaxis.set_minor_locator(xminor)
-    # ax.xaxis.set_major_locator(xmajor)
-    # ax.xaxis.set_tick_params(color="#4E616C", labelcolor="#4E616C", labelsize=6, which="minor", length=4)
-    # ax.xaxis.set_tick_params(color="#4E616C", labelcolor="#4E616C", labelsize=6, which="major", length=5)
+    ax.plot(X, train_acc_list, marker="o", mfc="white", ms=2)
+    ax.plot(X, test_acc_list, marker="o", mfc="white", ms=2)
     ax.spines["bottom"].set_edgecolor("#4E616C")
-    plt.savefig('/home/wyw/cifar/results/resnet18/resnet18_acc.png')#保存图片
+    plt.savefig('/home/wyf/cifar/results/resnet18/resnet18_acc_bs_128.png')  # 保存图片
     plt.show()
+
 
 def drawLoss(train_loss_list):
     fig, ax = plt.subplots(figsize=(9, 3), dpi=200, facecolor = "#EFE9E6")
@@ -66,11 +62,11 @@ def drawLoss(train_loss_list):
     ax.tick_params(axis="x", direction="out", color="#4E616C", labelcolor="#4E616C", labelsize=6, which="major",
                    length=5)
     ax.spines["bottom"].set_edgecolor("#4E616C")
-    plt.savefig('/home/wyw/cifar/results/resnet18/resnet18_loss.png')  # 保存图片
+    plt.savefig('/home/wyf/cifar/results/resnet18/resnet18_loss_bs_128.png')  # 保存图片
     plt.show()
 
 # 定义是否使用GPU
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
 
 # 参数设置,使得我们能够手动输入命令行参数，就是让风格变得和Linux命令行差不多
 parser = argparse.ArgumentParser(description='PyTorch CIFAR10 Training')
@@ -81,8 +77,8 @@ args = parser.parse_args()
 # 超参数设置
 EPOCH = 150  # 遍历数据集次数
 pre_epoch = 0  # 定义已经遍历数据集的次数
-BATCH_SIZE = 128  # 批处理尺寸(batch_size)
-LR = 0.1  # 学习率
+BATCH_SIZE = 256  # 批处理尺寸(batch_size)
+LR = 0.01  # 学习率
 
 # 准备数据集并预处理
 transform_train = transforms.Compose([
@@ -115,17 +111,18 @@ net = ResNet18().to(device)
 
 # 定义损失函数和优化方式
 criterion = nn.CrossEntropyLoss()  # 损失函数为交叉熵，多用于多分类问题
+# optimizer = optim.Adam(net.parameters(), lr=LR, momentum=0.9,
+#                       weight_decay=5e-4)  # 优化方式为mini-batch momentum-SGD，并采用L2正则化（权重衰减）
 optimizer = optim.SGD(net.parameters(), lr=LR, momentum=0.9,
-                      weight_decay=5e-4)  # 优化方式为mini-batch momentum-SGD，并采用L2正则化（权重衰减）
-
+                      weight_decay=5e-4)
 # 训练
 if __name__ == "__main__":
     best_acc = 85  # 2 初始化best test accuracy
     print("Start Training, Resnet-18!")  # 定义遍历数据集的次数
-    TIMESTAMP = f"{datetime.now():%Y-%m-%dT%H-%M-%S/}"
     train_acc_list = []
     train_loss_list = []
     test_acc_list = []
+    t0 = time.time()
     for epoch in range(pre_epoch, EPOCH):
         print('\nEpoch: %d' % (epoch + 1))
         net.train()
@@ -179,8 +176,13 @@ if __name__ == "__main__":
             if acc > best_acc:
                 print("EPOCH=%d,best_acc= %.3f%%" % (epoch + 1, acc))
                 print('Saving weight......')
-                torch.save(net.state_dict(), '%s/resnet18_best.pth' % (args.outf))
+                torch.save(net.state_dict(), '%s/resnet18_best_bs_128.pth' % (args.outf))
                 best_acc = acc
+    t1 = time.time()
+    training_time = t1 - t0
     drawLoss(train_loss_list)
     drawAcc(train_acc_list, test_acc_list)
     print("Training Finished, TotalEPOCH=%d" % EPOCH)
+    print("best test_acc:", max(test_acc_list))
+    training_time = format_time(training_time)
+    print("training time:", training_time)
