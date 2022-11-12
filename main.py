@@ -48,7 +48,6 @@ def drawLoss(train_loss_list):
     ax.plot(X, train_loss_list, marker="o", mfc = "white", ms = 1)
     xmajor = ticker.MultipleLocator(10)
     xminor = ticker.MultipleLocator(5)
-    # xticks_ = ax.xaxis.set_ticklabels([x for x in range(0, len(X) + 3, 4)])
     # This last line outputs
     # [-1, 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35]
     # and we mark the tickers every two positions.
