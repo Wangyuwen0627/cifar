@@ -3,7 +3,7 @@
 # CIFAR10分类
 ## 1. 模型结构介绍
 ### 1.1 ResNet-18
-![img.png](pics/model_struct/resnet18.png)
+![img.png](./pics/model_struct/resnet18.png)
 如图所示，ResNet网络是参考了VGG19网络，并且在其基础上进行了修改，主要改进在于通过短路机制加入了残差单元。
 如图中，ResNet相比普通网络每两层间增加了短路机制，虚线就表示feature map数量发生了改变。  
 ResNet直接使用stride=2的卷积做下采样，并且用global average pool层替换了全连接层。
@@ -15,12 +15,12 @@ ResNet-18的详细结构解析如下：
 4. 按照作者说的，在con3_1、con4_1、con5_1都进行了2倍的下采样；
 5. 最后一层先经过一个自适应平均池化层，然后一个全连接层映射到输出；
 ### 1.2 DenseNet
-![img.png](pics/model_struct/desnet.png)  
+![img.png](./pics/model_struct/desnet.png)  
 
 DenseNet不同于ResNet中的残差结构，也不同于GoogLetNet中的Inception网络结构。
 DenseNet通过更密集的特征连接，使模型有了更好的性能，并且相比ResNet进一步减少了参数。  
 DenseNet中有两个重要的结构，分别是Dense Block和Transition Layer
-![img.png](pics/model_struct/denseblock.png)  
+![img.png](./pics/model_struct/denseblock.png)  
 
 上图为DenseNet的Dense Block结构，DenseNet就是由多个这样的Dense Block结构组成，
 它的核心思想就是后面每个层都会接受其前面所有层作为其额外的输入，
@@ -34,7 +34,7 @@ Transition Layer将不同DenseBlock之间进行连接的模块，主要功能是
 <center>
     <img style="border-radius: 0.3125em;
     box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
-    src="pics/acc1.png" width = "65%" alt=""/>
+    src="./pics/acc1.png" width = "65%" alt=""/>
     <br>
     <div style="color:orange; border-bottom: 1px solid #d9d9d9;
     display: inline-block;
@@ -49,7 +49,7 @@ Transition Layer将不同DenseBlock之间进行连接的模块，主要功能是
 <center>
     <img style="border-radius: 0.3125em;
     box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
-    src="pics/acc1.png" width = "65%" alt=""/>
+    src="./pics/img_2.png" width = "65%" alt=""/>
     <br>
     <div style="color:orange; border-bottom: 1px solid #d9d9d9;
     display: inline-block;
@@ -70,7 +70,7 @@ Transition Layer将不同DenseBlock之间进行连接的模块，主要功能是
 <center>
     <img style="border-radius: 0.3125em;
     box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
-    src="pics/acc1.png" width = "65%" alt=""/>
+    src="./pics/acc1.png" width = "65%" alt=""/>
     <br>
     <div style="color:orange; border-bottom: 1px solid #d9d9d9;
     display: inline-block;
@@ -82,7 +82,7 @@ Transition Layer将不同DenseBlock之间进行连接的模块，主要功能是
 <center>
     <img style="border-radius: 0.3125em;
     box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
-    src="pics/acc2.png" width = "65%" alt=""/>
+    src="./pics/acc2.png" width = "65%" alt=""/>
     <br>
     <div style="color:orange; border-bottom: 1px solid #d9d9d9;
     display: inline-block;
@@ -94,7 +94,7 @@ Transition Layer将不同DenseBlock之间进行连接的模块，主要功能是
 <center>
     <img style="border-radius: 0.3125em;
     box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
-    src="pics/acc3.png" width = "65%" alt=""/>
+    src="./pics/acc3.png" width = "65%" alt=""/>
     <br>
     <div style="color:orange; border-bottom: 1px solid #d9d9d9;
     display: inline-block;
@@ -119,7 +119,7 @@ Transition Layer将不同DenseBlock之间进行连接的模块，主要功能是
 <center>
     <img style="border-radius: 0.3125em;
     box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
-    src="pics/acc4.png" width = "65%" alt=""/>
+    src="./pics/acc4.png" width = "65%" alt=""/>
     <br>
     <div style="color:orange; border-bottom: 1px solid #d9d9d9;
     display: inline-block;
@@ -131,7 +131,7 @@ Transition Layer将不同DenseBlock之间进行连接的模块，主要功能是
 <center>
     <img style="border-radius: 0.3125em;
     box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
-    src="pics/acc5.png" width = "65%" alt=""/>
+    src="./pics/acc5.png" width = "65%" alt=""/>
     <br>
     <div style="color:orange; border-bottom: 1px solid #d9d9d9;
     display: inline-block;
@@ -154,7 +154,7 @@ Transition Layer将不同DenseBlock之间进行连接的模块，主要功能是
 <center>
     <img style="border-radius: 0.3125em;
     box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
-    src="pics/img.png" width = "65%" alt=""/>
+    src="./pics/img.png" width = "65%" alt=""/>
     <br>
     <div style="color:orange; border-bottom: 1px solid #d9d9d9;
     display: inline-block;
@@ -166,7 +166,7 @@ Transition Layer将不同DenseBlock之间进行连接的模块，主要功能是
 <center>
     <img style="border-radius: 0.3125em;
     box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
-    src="pics/img_1.png" width = "65%" alt=""/>
+    src="./pics/img_1.png" width = "65%" alt=""/>
     <br>
     <div style="color:orange; border-bottom: 1px solid #d9d9d9;
     display: inline-block;
