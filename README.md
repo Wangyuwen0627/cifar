@@ -30,9 +30,35 @@ Transition Layer将不同DenseBlock之间进行连接的模块，主要功能是
 
 ## 2. 模型效果展示
 ### 2.1 ResNet-18模型效果展示
-该种方法下，模型测试准确率可以达到：
+该种方法下，模型测试准确率可以达到：92.12%
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="pics/acc1.png" width = "65%" alt=""/>
+    <br>
+    <div style="color:orange; border-bottom: 1px solid #d9d9d9;
+    display: inline-block;
+    color: #999;
+    padding: 2px;">
+      ResNet-18，训练集与测试集上的准确率
+  	</div>
+</center>
+
 ### 2.2 DenseNet模型效果展示
-该种方法下，模型测试准确率可以达到：
+该种方法下，模型测试准确率可以达到：90.18%
+<center>
+    <img style="border-radius: 0.3125em;
+    box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" 
+    src="pics/acc1.png" width = "65%" alt=""/>
+    <br>
+    <div style="color:orange; border-bottom: 1px solid #d9d9d9;
+    display: inline-block;
+    color: #999;
+    padding: 2px;">
+      DenseNet，训练集与测试集上的准确率
+  	</div>
+</center>
+
 ## 3. 模型超参数对模型性能的影响
 ### 3.1 学习率
 我在学习率0.001，0.01，0.1的情况下分别进行了实验，得到如下表与下图所示的实验结果： 

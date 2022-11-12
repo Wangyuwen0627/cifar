@@ -100,6 +100,13 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="wyf@10.214.211.135:22 (2)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="wyw@10.82.68.204:18022">
         <serverdata>
           <mappings>

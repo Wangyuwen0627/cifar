@@ -66,7 +66,7 @@ def drawLoss(train_loss_list):
     plt.show()
 
 # 定义是否使用GPU
-device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 # 参数设置,使得我们能够手动输入命令行参数，就是让风格变得和Linux命令行差不多
 parser = argparse.ArgumentParser(description='PyTorch CIFAR10 Training')
@@ -77,7 +77,7 @@ args = parser.parse_args()
 # 超参数设置
 EPOCH = 150  # 遍历数据集次数
 pre_epoch = 0  # 定义已经遍历数据集的次数
-BATCH_SIZE = 256  # 批处理尺寸(batch_size)
+BATCH_SIZE = 128  # 批处理尺寸(batch_size)
 LR = 0.01  # 学习率
 
 # 准备数据集并预处理
@@ -105,9 +105,9 @@ testloader = torch.utils.data.DataLoader(testset, batch_size=100, shuffle=False,
 classes = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
 # 模型定义-ResNet
-net = ResNet18().to(device)
-# net = DenseNet(growthRate=12, depth=100, reduction=0.5,
-#                bottleneck=True, nClasses=10).to(device)
+# net = ResNet18().to(device)
+net = DenseNet(growthRate=12, depth=100, reduction=0.5,
+               bottleneck=True, nClasses=10).to(device)
 
 # 定义损失函数和优化方式
 criterion = nn.CrossEntropyLoss()  # 损失函数为交叉熵，多用于多分类问题
