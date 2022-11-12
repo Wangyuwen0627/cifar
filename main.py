@@ -47,7 +47,7 @@ def drawLoss(train_loss_list):
     X = pd.Series(range(len(train_loss_list)))
     ax.plot(X, train_loss_list, marker="o", mfc = "white", ms = 1)
     xmajor = ticker.MultipleLocator(10)  # 主 10 的倍数
-    xminor = ticker.MultipleLocator(5)  # 次 2的倍数
+    xminor = ticker.MultipleLocator(5)
     # ax.xaxis.set_major_locator(ticker.MultipleLocator(2))  # ticker every 2 matchdays
     # xticks_ = ax.xaxis.set_ticklabels([x for x in range(0, len(X) + 3, 4)])
     # This last line outputs
